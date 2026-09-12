@@ -2,7 +2,7 @@
 
 A project exploring sequence alignment algorithms and their applications across medical event sequences. 
 
-## Introduction
+## Algorithms
 
 ## Project structure
 
