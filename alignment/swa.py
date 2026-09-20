@@ -52,11 +52,14 @@ def smith_waterman(X: str, Y: str, match = 1, mismatch = -1, gap = -1) -> list[l
     A = np.zeros((row_len, col_len))
     T = np.zeros((row_len, col_len))
 
+    print('Performing forward SWA pass...')
+
     # For each cell (going top to bottom, left to right) carry out the SWA and record the trace
     for row in range(1, row_len):
         for col in range(1, col_len):
             A[row, col], T[row, col] = _fill_cell(X, Y, A, row, col, match, mismatch, gap)
 
+    print('Calculating similarity...')
 
     # Find the index of the maximum value in A
     max_val = np.max(A)
@@ -72,6 +75,8 @@ def smith_waterman(X: str, Y: str, match = 1, mismatch = -1, gap = -1) -> list[l
     # Initialise the aligned sequences
     X_aligned = ""
     Y_aligned = ""
+
+    print('Backtracking...')
 
     # Backtrack the trace, saving the aligned sequence on tbe way
     while int(T[max_row, max_col]) != Trace.STOP:
@@ -97,5 +102,6 @@ def smith_waterman(X: str, Y: str, match = 1, mismatch = -1, gap = -1) -> list[l
         seq_y_aligned=Y_aligned
     )
 
-result = smith_waterman("AAAAGDEFWAAA", "ILFFAAAAAA")
-print(result.similarity)
+if __name__ == "__main__":
+    result = smith_waterman("AAABAAGDEFWAAA", "ILFFACAAAAA")
+    print((result.seq_y_aligned, result.seq_x_aligned))
